@@ -1,0 +1,114 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SistemaPessoa {
+    public static void main(String[] args) {
+        JFrame mainWindow = new JFrame("Sistema de Pessoa");
+        mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainWindow.setSize(400, 300);
+        mainWindow.setLocationRelativeTo(null);
+        
+        JMenuBar menuBar = new JMenuBar();
+        
+        JMenu menuCadastro = new JMenu("Cadastro");
+        JMenuItem itemUsuarios = new JMenuItem("Usuários");
+        JMenuItem itemPessoas = new JMenuItem("Pessoas");
+        menuCadastro.add(itemUsuarios);
+        menuCadastro.add(itemPessoas);
+        
+        JMenu menuVisualizacao = new JMenu("Visualização");
+        JMenuItem itemListaUsuarios = new JMenuItem("Lista de usuários");
+        JMenuItem itemListaPessoas = new JMenuItem("Lista de pessoas");
+        menuVisualizacao.add(itemListaUsuarios);
+        menuVisualizacao.add(itemListaPessoas);
+        
+        JMenuItem itemSair = new JMenuItem("Sair");
+        itemSair.addActionListener(e -> System.exit(0));
+        
+        menuBar.add(menuCadastro);
+        menuBar.add(menuVisualizacao);
+        menuBar.add(itemSair);
+        mainWindow.setJMenuBar(menuBar);
+        
+        JLabel rotuloRodape = new JLabel("------------------------------------------------------------------------------------------------");
+        mainWindow.add(rotuloRodape, BorderLayout.SOUTH);
+        
+        // Add action to "Usuários" menu item to open the user registration window
+        itemUsuarios.addActionListener(e -> openUserRegistrationWindow());
+        
+        // Make the main window visible
+        mainWindow.setVisible(true);
+    }
+
+    // Method to open the User Registration Window
+    private static void openUserRegistrationWindow() {
+        // Create a new JFrame for the "Cadastro de Usuários" window
+        JFrame userWindow = new JFrame("Cadastro de Usuários");
+        userWindow.setSize(400, 300);
+        userWindow.setLocationRelativeTo(null);
+        
+        // Create a panel for user registration form
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new GridLayout(5, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        
+        // Create form components
+        JLabel userLabel = new JLabel("Usuário:");
+        JTextField userField = new JTextField();
+        JLabel passwordLabel = new JLabel("Senha:");
+        JPasswordField passwordField = new JPasswordField();
+        JLabel emailLabel = new JLabel("Email:");
+        JTextField emailField = new JTextField();
+        JLabel activeLabel = new JLabel("Ativo:");
+        JCheckBox activeCheckBox = new JCheckBox();
+        
+        // Add form components to the panel
+        formPanel.add(userLabel);
+        formPanel.add(userField);
+        formPanel.add(passwordLabel);
+        formPanel.add(passwordField);
+        formPanel.add(emailLabel);
+        formPanel.add(emailField);
+        formPanel.add(activeLabel);
+        formPanel.add(activeCheckBox);
+        
+        // Create button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        String[] buttons = {"Incluir", "Alterar", "Excluir", "Consultar", "Cancelar", "Sair"};
+        for (String buttonName : buttons) {
+            JButton button = new JButton(buttonName);
+            buttonPanel.add(button);
+            // Add action listener for each button
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    switch (buttonName) {
+                        case "Sair":
+                            userWindow.dispose(); // Close the registration window
+                            break;
+                        case "Cancelar":
+                            userField.setText(""); // Clear the username field
+                            passwordField.setText(""); // Clear the password field
+                            emailField.setText(""); // Clear the email field
+                            activeCheckBox.setSelected(false); // Uncheck the active checkbox
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(userWindow,
+                                    "Botão clicado! - " + buttonName,
+                                    "Informação",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
+            });
+        }
+        
+        // Add the form panel and button panel to the user window
+        userWindow.add(formPanel, BorderLayout.CENTER);
+        userWindow.add(buttonPanel, BorderLayout.SOUTH);
+        
+        // Make the user registration window visible
+        userWindow.setVisible(true);
+    }
+}
