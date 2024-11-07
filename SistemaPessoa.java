@@ -1,64 +1,98 @@
 import javax.swing.*;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+// Classe que representa o sistema, contendo o método principal para rodar a aplicação
 public class SistemaPessoa {
-
     public static void main(String[] args) {
+        // Dados constantes
+        final String versaoSistema = "12.1.2024";
+        String nomeUsuario = "denys.silva";
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm");
+        String dataAcesso = dateFormat.format(new Date());
 
-        JFrame frame = new JFrame("Sistema de Pessoa");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setLayout(new BorderLayout());
+        // Criação da janela principal
+        JanelaPrincipal janela = new JanelaPrincipal(versaoSistema, nomeUsuario, dataAcesso);
+        janela.mostrarJanela();
+    }
+}
 
-        JMenuBar menuBar = new JMenuBar();
+// Classe que representa a Janela Principal do Sistema
+class JanelaPrincipal {
+    private String versaoSistema;
+    private String nomeUsuario;
+    private String dataAcesso;
+    private JFrame principal;
+
+    public JanelaPrincipal(String versaoSistema, String nomeUsuario, String dataAcesso) {
+        this.versaoSistema = versaoSistema;
+        this.nomeUsuario = nomeUsuario;
+        this.dataAcesso = dataAcesso;
+
+        this.principal = new JFrame("Sistema Pessoa");
+        this.principal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.principal.setSize(800, 800);
+    }
+
+    public void mostrarJanela() {
+        // Adiciona componentes na janela principal
+        principal.getContentPane().add(BorderLayout.NORTH, new MenuPrincipal());
+        principal.getContentPane().add(BorderLayout.CENTER, new JTextArea());
+        principal.getContentPane().add(BorderLayout.SOUTH, new Rodape(versaoSistema, nomeUsuario, dataAcesso));
+
+        principal.setLocationRelativeTo(null); // Centraliza a janela
+        principal.setVisible(true); // Torna a janela visível
+    }
+}
+
+// Classe responsável pela criação do menu principal
+class MenuPrincipal extends JMenuBar {
+    public MenuPrincipal() {
+        // Criação do menu principal
         JMenu menuCadastro = new JMenu("Cadastro");
         JMenu menuVisualizacao = new JMenu("Visualização");
         JMenu menuSair = new JMenu("Sair");
-        menuBar.add(menuCadastro);
-        menuBar.add(menuVisualizacao);
-        menuBar.add(menuSair);
-        frame.setJMenuBar(menuBar);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 2, 10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // Opções do menu Sair
+        menuSair.addMenuListener(new javax.swing.event.MenuListener() {
+            @Override
+            public void menuSelected(javax.swing.event.MenuEvent e) {
+                System.exit(0); // Fecha o sistema
+            }
 
-        panel.add(new JLabel("Nome:"));
-        JTextField nomeField = new JTextField();
-        panel.add(nomeField);
+            @Override
+            public void menuDeselected(javax.swing.event.MenuEvent e) { }
 
-        panel.add(new JLabel("Endereço:"));
-        JTextField enderecoField = new JTextField();
-        panel.add(enderecoField);
+            @Override
+            public void menuCanceled(javax.swing.event.MenuEvent e) { }
+        });
 
-        panel.add(new JLabel("Cidade:"));
-        JTextField cidadeField = new JTextField();
-        panel.add(cidadeField);
+        // Adiciona os menus à barra de menu
+        add(menuCadastro);
+        add(menuVisualizacao);
+        add(menuSair);
 
-        panel.add(new JLabel("UF:"));
-        JTextField ufField = new JTextField();
-        panel.add(ufField);
+        // Itens do menuCadastro
+        JMenuItem itemMenuCadastroUsuarios = new JMenuItem("Usuários");
+        JMenuItem itemMenuCadastroPessoas = new JMenuItem("Pessoas");
+        menuCadastro.add(itemMenuCadastroUsuarios);
+        menuCadastro.add(itemMenuCadastroPessoas);
 
-        panel.add(new JLabel("Email:"));
-        JTextField emailField = new JTextField();
-        panel.add(emailField);
+        // Itens do menuVisualizacao
+        JMenuItem itemMenuVisualizacaoListaUsuarios = new JMenuItem("Lista de usuários");
+        JMenuItem itemMenuVisualizacaoListaPessoas = new JMenuItem("Lista de pessoas");
+        menuVisualizacao.add(itemMenuVisualizacaoListaUsuarios);
+        menuVisualizacao.add(itemMenuVisualizacaoListaPessoas);
+    }
+}
 
-        panel.add(new JLabel("Telefone:"));
-        JTextField telefoneField = new JTextField();
-        panel.add(telefoneField);
-
-        panel.add(new JLabel("Sexo:"));
-        String[] opcoesSexo = {"Masculino", "Feminino", "Outro"};
-        JComboBox<String> sexoComboBox = new JComboBox<>(opcoesSexo);
-        panel.add(sexoComboBox);
-
-        frame.add(panel, BorderLayout.CENTER);
-
-        JPanel rodape = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel rodapeLabel = new JLabel("Versão: 07.07.2024    Usuário: Matheus Ribeiro    Data de acesso: 23/10/2024 10:38");
-        rodape.add(rodapeLabel);
-        frame.add(rodape, BorderLayout.SOUTH);
-
-        frame.setVisible(true);
+// Classe responsável pela criação do rodapé da janela
+class Rodape extends JPanel {
+    public Rodape(String versaoSistema, String nomeUsuario, String dataAcesso) {
+        // Criação do rodapé
+        JLabel labelRodape = new JLabel("Versão: " + versaoSistema + "               Usuário: " + nomeUsuario + "               Data de acesso: " + dataAcesso);
+        this.add(labelRodape); // Adiciona o label no painel
     }
 }
