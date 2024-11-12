@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SistemaPessoa extends JPanel {
+public class SistemaPessoas extends JPanel {
 
     public static void main(String args[]) {
         final String versaoSistema = "12.1.2024";

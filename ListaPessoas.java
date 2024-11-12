@@ -1,5 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
+
+public class ListaPessoas {
+
+    // Método que abre a lista de pessoas
+    public static void exibirLista(JFrame principal) {
+        JDialog listaPessoas = new JDialog(principal, "Lista de Pessoas", true);
+        listaPessoas.setSize(750, 650);
+        listaPessoas.setLayout(new BorderLayout());
+
+        listaPessoas.add(new JLabel("Lista de Pessoas", SwingConstants.CENTER), BorderLayout.NORTH);
+        listaPessoas.add(new JTextArea("Exemplo de lista de pessoas..."), BorderLayout.CENTER);
+
+        JButton btnFechar = new JButton("Fechar");
+        btnFechar.addActionListener(e -> listaPessoas.setVisible(false));
+        listaPessoas.add(btnFechar, BorderLayout.SOUTH);
+
+        listaPessoas.setLocationRelativeTo(principal);
+        listaPessoas.setVisible(true);
+    }
+}
+5. Classe SistemaPessoa (Principal)
+java
+Copiar código
+import javax.swing.*;
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,3 +81,8 @@ public class SistemaPessoa extends JPanel {
         itemMenuCadastroUsuarios.addActionListener(e -> CadastroUsuarios.abrirCadastro(principal));
         itemMenuCadastroPessoas.addActionListener(e -> CadastroPessoas.abrirCadastro(principal));
         itemMenuVisualizacaoLista
+
+
+
+
+
