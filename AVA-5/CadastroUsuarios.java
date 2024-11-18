@@ -1,13 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class CadastroUsuarios {
-    private final JFrame principal;
+public class CadastroUsuarios extends CadastroVisualizacao {
 
     public CadastroUsuarios(JFrame principal) {
-        this.principal = principal;
+        super(principal);
     }
 
+    @Override
     public void exibir() {
         JDialog dialog = new JDialog(principal, "Cadastro de Usuários", true);
         dialog.setSize(600, 300);
